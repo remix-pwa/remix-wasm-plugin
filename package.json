@@ -1,0 +1,39 @@
+{
+  "name": "remix-wasm-plugin",
+  "version": "0.0.1",
+  "description": "A simple plugin to add WASM capabilities to your remix app",
+  "bin": {
+    "remix-wasm-plugin": "build/index.js"
+  },
+  "main": "build/index.js",
+  "scripts": {
+    "start": "node --experimental-specifier-resolution=node --loader ts-node ./src/index.ts",
+    "build": "rimraf ./build && tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "build"
+  ],
+  "keywords": [
+    "wasm",
+    "WASM",
+    "remix-pwa",
+    "client",
+    "remix",
+    "plugin"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/args": "^5.0.0",
+    "@types/node": "^18.14.2",
+    "fs-extra": "^11.1.0",
+    "rimraf": "^4.1.2",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.5.0",
+    "typescript": "^4.9.5"
+  }
+}
