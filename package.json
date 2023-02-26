@@ -1,5 +1,5 @@
 {
-  "name": "remix-wasm-plugin",
+  "name": "@remix-pwa/remix-wasm-plugin",
   "version": "0.0.1",
   "description": "A simple plugin to add WASM capabilities to your remix app",
   "bin": {
@@ -22,7 +22,6 @@
     "remix",
     "plugin"
   ],
-  "author": "",
   "license": "MIT",
   "dependencies": {
     "commander": "^10.0.0"
