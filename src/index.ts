@@ -34,10 +34,14 @@ module.exports = {
 }
 `;
 
-      fs.writeFile(configPath, config, (err: Error) => {
-        if (err) throw err;
-        console.log("WASM config created!");
-      });
+      if (!fs.existsSync(configPath)) {
+        fs.writeFile(configPath, config, (err: Error) => {
+          if (err) throw err;
+          console.log("WASM config created!");
+        });
+      } else {
+        console.log("Found wasm.config.js file. Skipping...")
+      }
     });
 
   program
@@ -50,7 +54,7 @@ module.exports = {
         );
         return;
       }
-      
+
       const configPath = path.join(process.cwd(), "wasm.config.js");
       const config: {
         enabled: boolean;
@@ -81,9 +85,13 @@ module.exports = {
             let wasm: any[] = files
               .filter((dirent: any) => dirent.isDirectory())
               .map((dirent: any) => dirent.name)
-              .filter((name: string) => config.modules.includes(name));
+              .filter((name: string) => config.modules.includes(name.split("/")[0]));
 
             wasm.forEach((module: string) => {
+              if(module.charAt(0) == "@") {
+                module = module.split("/").slice(0, 2).join("/");
+              }
+
               const wasmPath = path.join(nodeModules, module);
               const wasmDest = path.join(
                 process.cwd(),
