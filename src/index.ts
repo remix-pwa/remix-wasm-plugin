@@ -48,14 +48,22 @@ module.exports = {
     .command("build")
     .description("Bundle your WASM modules into your Remix application")
     .action(async () => {
+      const configPath = path.join(process.cwd(), "wasm.config.js");
+      
       if (!fs.existsSync(remixConfigPath)) {
         console.log(
           "No Remix config file found! Make sure to run the commands in the root of your Remix app"
         );
         return;
+      } 
+
+      if (!fs.existsSync(configPath)) {
+        console.log(
+          "No WASM config file found! Make sure to run `remix-wasm-plugin init` first"
+        );
+        return;
       }
 
-      const configPath = path.join(process.cwd(), "wasm.config.js");
       const config: {
         enabled: boolean;
         modules: string[];
@@ -85,13 +93,15 @@ module.exports = {
             let wasm: any[] = files
               .filter((dirent: any) => dirent.isDirectory())
               .map((dirent: any) => dirent.name)
-              .filter((name: string) => config.modules.includes(name.split("/")[0]));
+              .filter((name: string) => config.modules.map(e => e.split("/")[0]).includes(name));
 
-            wasm.forEach((module: string) => {
+            wasm.map((module: string, index: number) => {
               if(module.charAt(0) == "@") {
-                module = module.split("/").slice(0, 2).join("/");
+                module = config.modules[index]
               }
 
+              console.log(module);
+              
               const wasmPath = path.join(nodeModules, module);
               const wasmDest = path.join(
                 process.cwd(),
