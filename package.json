@@ -1,6 +1,6 @@
 {
   "name": "remix-wasm-plugin",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "A simple plugin to add WASM capabilities to your remix app",
   "bin": {
     "remix-wasm-plugin": "build/index.js"
