@@ -2,13 +2,28 @@
 const path = require("path");
 const fs = require("fs");
 const fse = require("fs-extra");
+const c = require("ansi-colors");
 
 const { Command } = require("commander");
 const program = new Command();
 
-const run = async () => {
-  const remixConfigPath = path.join(process.cwd(), "remix.config.js");
+const remixConfigPath = path.join(process.cwd(), "remix.config.js");
+const configPath = path.join(process.cwd(), "wasm.config.js");
 
+const isRemixRoot = () => {
+  if (!fs.existsSync(remixConfigPath)) {
+    console.log(
+      c.red.bold(
+        "No Remix config file found! Make sure to run in the root of your Remix app"
+      )
+    );
+    return false;
+  }
+
+  return true;
+};
+
+const run = async () => {
   program
     .name("remix-wasm-plugin")
     .description("A utility module to add WASM capabilities to your Remix app!")
@@ -18,14 +33,9 @@ const run = async () => {
     .command("init")
     .description("Initialize a new wasm project in your application")
     .action(() => {
-      if (!fs.existsSync(remixConfigPath)) {
-        console.log(
-          "No Remix config file found! Make sure to run the commands in the root of your Remix app"
-        );
+      if (!isRemixRoot()) {
         return;
       }
-
-      const configPath = path.join(process.cwd(), "wasm.config.js");
 
       const config = `/* WASM.config */
 module.exports = {
@@ -37,10 +47,10 @@ module.exports = {
       if (!fs.existsSync(configPath)) {
         fs.writeFile(configPath, config, (err: Error) => {
           if (err) throw err;
-          console.log("WASM config created!");
+          console.log(c.blue("WASM config created!"));
         });
       } else {
-        console.log("Found wasm.config.js file. Skipping...")
+        console.log(c.cyan("Found wasm.config.js file. Skipping..."));
       }
     });
 
@@ -48,18 +58,13 @@ module.exports = {
     .command("build")
     .description("Bundle your WASM modules into your Remix application")
     .action(async () => {
-      const configPath = path.join(process.cwd(), "wasm.config.js");
-      
-      if (!fs.existsSync(remixConfigPath)) {
-        console.log(
-          "No Remix config file found! Make sure to run the commands in the root of your Remix app"
-        );
+      if (!isRemixRoot()) {
         return;
-      } 
+      }
 
       if (!fs.existsSync(configPath)) {
         console.log(
-          "No WASM config file found! Make sure to run `remix-wasm-plugin init` first"
+          c.white("No WASM config file found! Make sure to run `remix-wasm-plugin init` first")
         );
         return;
       }
@@ -70,13 +75,13 @@ module.exports = {
       } = require(configPath);
 
       if (!config.enabled) {
-        console.log("WASM is disabled in your config file!");
+        console.log(c.yellow.bold("WASM is disabled in your config file!"));
         return;
       }
 
       if (config.modules.length == 0) {
         console.log(
-          "No WASM modules specified in the `modules` field in wasm.config.js!"
+          c.yellow("No WASM modules specified in the `modules` field in wasm.config.js!")
         );
         return;
       }
@@ -93,15 +98,15 @@ module.exports = {
             let wasm: any[] = files
               .filter((dirent: any) => dirent.isDirectory())
               .map((dirent: any) => dirent.name)
-              .filter((name: string) => config.modules.map(e => e.split("/")[0]).includes(name));
+              .filter((name: string) =>
+                config.modules.map((e) => e.split("/")[0]).includes(name)
+              );
 
             wasm.map((module: string, index: number) => {
-              if(module.charAt(0) == "@") {
-                module = config.modules[index]
+              if (module.charAt(0) == "@") {
+                module = config.modules[index];
               }
 
-              console.log(module);
-              
               const wasmPath = path.join(nodeModules, module);
               const wasmDest = path.join(
                 process.cwd(),
@@ -116,9 +121,10 @@ module.exports = {
 
               fse.copy(wasmPath, wasmDest, (err: Error) => {
                 if (err) throw err;
-                console.log(`WASM module ${module} copied!`);
               });
             });
+
+            console.log(c.blue("WASM modules built!"));
           }
         }
       );
