@@ -13,7 +13,7 @@
     "prepublishOnly": "npm run build"
   },
   "files": [
-    "build"
+    "build/**"
   ],
   "keywords": [
     "wasm",
