@@ -34,7 +34,9 @@ Add this scripts to your `package.json` to build your wasm modules when your app
 ## Usage
 
 To use `remix-wasm-plugin` in your application after initializing you config. file, update your
-the `modules` field in the config. with your wasm packages. **The name of the packages should be the same as it appears in your `package.json`.**
+the `modules` field in the config. with your wasm packages. 
+
+> **The name of the packages should be the same as it appears in your `package.json`.**
 
 ```js
 /* WASM.config */
