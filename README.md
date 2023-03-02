@@ -93,6 +93,6 @@ Currently there are two configuration options you can set.
 
 This option is for wether you want to enable wasm capabilities in your application
 
-### modules: string[]:
+### modules: string[]
 
 This is an array of wasm modules you want to bundle into your app.
