@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-const path = require("path");
-const fs = require("fs");
+import path from "path";
+import { existsSync, writeFile, readdir, mkdirSync } from "fs";
 const fse = require("fs-extra");
 const c = require("ansi-colors");
 
@@ -11,7 +11,7 @@ const remixConfigPath = path.join(process.cwd(), "remix.config.js");
 const configPath = path.join(process.cwd(), "wasm.config.js");
 
 const isRemixRoot = () => {
-  if (!fs.existsSync(remixConfigPath)) {
+  if (!existsSync(remixConfigPath)) {
     console.log(
       c.red.bold(
         "No Remix config file found! Make sure to run in the root of your Remix app"
@@ -44,8 +44,8 @@ module.exports = {
 }
 `;
 
-      if (!fs.existsSync(configPath)) {
-        fs.writeFile(configPath, config, (err: Error) => {
+      if (!existsSync(configPath)) {
+        writeFile(configPath, config, (err: NodeJS.ErrnoException | null) => {
           if (err) throw err;
           console.log(c.blue("WASM config created!"));
         });
@@ -62,7 +62,7 @@ module.exports = {
         return;
       }
 
-      if (!fs.existsSync(configPath)) {
+      if (existsSync(configPath)) {
         console.log(
           c.white("No WASM config file found! Make sure to run `remix-wasm-plugin init` first")
         );
@@ -88,7 +88,7 @@ module.exports = {
 
       const nodeModules = path.join(process.cwd(), "node_modules");
 
-      fs.readdir(
+      readdir(
         nodeModules,
         { withFileTypes: true },
         (err: any, files: any) => {
@@ -115,8 +115,8 @@ module.exports = {
                 module
               );
 
-              if (!fs.existsSync(wasmDest)) {
-                fs.mkdirSync(wasmDest, { recursive: true });
+              if (!existsSync(wasmDest)) {
+                mkdirSync(wasmDest, { recursive: true });
               }
 
               fse.copy(wasmPath, wasmDest, (err: Error) => {
