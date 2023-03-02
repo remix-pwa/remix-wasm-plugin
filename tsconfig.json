@@ -6,6 +6,8 @@
     "resolveJsonModule": true,   
     "module": "CommonJS",
     "moduleResolution": "node",
+    "declaration": true,
+    "declarationMap": true,
     "allowJs": true,                                     /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */
     "outDir": "build",                                   /* Specify an output folder for all emitted files. */
     "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
@@ -15,6 +17,7 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
   "exclude": ["node_modules", "build", "wasm.config.js"],
+  "include": ["src/**/*"],
   "ts-node": {
     "esm": true
   }
