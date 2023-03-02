@@ -46,7 +46,7 @@ module.exports = {
 }
 ```
 
-If the package is scoped, include it together in the field. e.g `@remix-pwa/client`
+> *If the package is scoped, include it together. e.g `@remix-pwa/client`*
 
 Import `initWithProps` from `remix-wasm-plugin` into your `entry.client.{tsx|jsx}` file. Wrap the `hydrateRoot` function with the
 `initWithProps` function. After that, you can call functions from your wasm package like any native JS module.
