@@ -27,7 +27,7 @@ const run = async () => {
   program
     .name("remix-wasm-plugin")
     .description("A utility module to add WASM capabilities to your Remix app!")
-    .version("0.3.0");
+    .version("0.3.4");
 
   program
     .command("init")
