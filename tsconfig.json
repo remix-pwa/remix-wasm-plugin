@@ -7,6 +7,7 @@
     "module": "CommonJS",
     "moduleResolution": "node",
     "declaration": true,
+    "declarationDir": "build/dts",
     "declarationMap": true,
     "allowJs": true,                                     /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */
     "outDir": "build",                                   /* Specify an output folder for all emitted files. */
