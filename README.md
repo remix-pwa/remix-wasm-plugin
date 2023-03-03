@@ -97,3 +97,10 @@ This option is for wether you want to enable wasm capabilities in your applicati
 
 This is an array of wasm modules you want to bundle into your app.
 
+## FAQ
+
+<details>
+<summary><b>But I don't want WASM in my entire app!</b></summary>
+Fair enough,...
+</details>
+
