@@ -45,10 +45,14 @@ module.exports = {
 `;
 
       if (!fs.existsSync(configPath)) {
-        fs.writeFile(configPath, config, (err: NodeJS.ErrnoException | null) => {
-          if (err) throw err;
-          console.log(c.blue("WASM config created!"));
-        });
+        fs.writeFile(
+          configPath,
+          config,
+          (err: NodeJS.ErrnoException | null) => {
+            if (err) throw err;
+            console.log(c.blue("WASM config created!"));
+          }
+        );
       } else {
         console.log(c.cyan("Found wasm.config.js file. Skipping..."));
       }
@@ -64,7 +68,9 @@ module.exports = {
 
       if (!fs.existsSync(configPath)) {
         console.log(
-          c.white("No WASM config file found! Make sure to run `remix-wasm-plugin init` first")
+          c.white(
+            "No WASM config file found! Make sure to run `remix-wasm-plugin init` first"
+          )
         );
         return;
       }
@@ -81,7 +87,9 @@ module.exports = {
 
       if (config.modules.length == 0) {
         console.log(
-          c.yellow("No WASM modules specified in the `modules` field in wasm.config.js!")
+          c.yellow(
+            "No WASM modules specified in the `modules` field in wasm.config.js!"
+          )
         );
         return;
       }
@@ -116,6 +124,9 @@ module.exports = {
               );
 
               if (!fs.existsSync(wasmDest)) {
+                fs.rmSync(wasmDest, { recursive: true, force: true });
+                fs.mkdirSync(wasmDest, { recursive: true });
+              } else {
                 fs.mkdirSync(wasmDest, { recursive: true });
               }
 
