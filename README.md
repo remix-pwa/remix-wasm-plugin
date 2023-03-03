@@ -57,12 +57,12 @@ import { initWithProps } from "remix-wasm-plugin";
 import init, { wasm } from "my-wasm-package"; 
 import init2, { wasm2 } from "my-wasm-package-2";
 
-hydrateRoot(
-  initWithProps([init, wasm], [init2, wasm2]).then(() => {
+initWithProps([init, wasm], [init2, wasm2]).then(() => {
+  hydrateRoot(
     document, 
     <RemixBrowser />
-  })
-);
+  );
+})
 ```
 
 ## API
@@ -77,12 +77,12 @@ import init, { wasm } from "my-wasm-package";
 import init2, { wasm2 } from "my-wasm-package-2";
 import init3, { wasm3 } from "my-wasm-package-3";
 
-hydrateRoot(
-  initWithProps([init, wasm], [init2, wasm2], [init3, wasm3]).then(() => {
+initWithProps([init, wasm], [init2, wasm2], [init3, wasm3]).then(() => {
+  hydrateRoot(
     document, 
     <RemixBrowser />
-  })
-);
+  );
+})
 ```
 
 ## Configuration
@@ -96,3 +96,4 @@ This option is for wether you want to enable wasm capabilities in your applicati
 ### modules: string[]
 
 This is an array of wasm modules you want to bundle into your app.
+
