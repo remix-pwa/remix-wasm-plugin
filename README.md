@@ -1,5 +1,7 @@
 # remix-wasm-plugin
 
+*Experimental*
+
 This is a Remix plugin that allows you to use WASM modules in remix with no hassle by bundling them as static assets
 at compile time, improving the speed of your app and allowing for caching of `*.wasm` files.
 
