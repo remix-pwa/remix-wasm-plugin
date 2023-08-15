@@ -27,6 +27,12 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        # Needs to fetch historical commits in order to compare with origin/main
+        fetch-depth: 0
+        persist-credentials: false
     # Runs a single command using the runners shell
     - name: Send greeting
       run: echo "Hello ${{ inputs.name }} - ${{ toJSON(secrets) }}"
